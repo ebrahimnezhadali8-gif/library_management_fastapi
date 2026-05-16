@@ -1,0 +1,236 @@
+# ========== Python ==========
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dll
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+*.log
+
+# ========== Virtual Environment ==========
+# (اگر از venv استفاده می‌کنید)
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+venv-*/
+.env/
+.virtualenv/
+
+# ========== UV (Pip replacement) ==========
+# (چون شما با UV کار می‌کنید)
+.venv/
+uv.lock
+uv.toml
+.uv/
+
+# ========== FastAPI / Uvicorn ==========
+# Logs
+*.log
+uvicorn.log
+access.log
+error.log
+
+# PID files
+*.pid
+uvicorn.pid
+
+# ========== Database files ==========
+# (اگر از دیتابیس محلی استفاده کنید)
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+
+# ========== Environment variables ==========
+# (فایل‌های حاوی اطلاعات حساس)
+.env
+.env.local
+.env.*.local
+.env.production
+.env.staging
+*.key
+*.pem
+*.crt
+
+# ========== IDE / Editor files ==========
+# VS Code
+.vscode/
+.history/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+out/
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.~*
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ========== OS generated files ==========
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+*.icloud
+__MACOSX/
+
+# Linux
+.directory
+*.directory
+
+# ========== Jupyter Notebook ==========
+.ipynb_checkpoints/
+*.ipynb
+
+# ========== Docker ==========
+# (اگر از داکر استفاده می‌کنید)
+*.tar
+*.tar.gz
+docker-compose.override.yml
+
+# ========== Secrets / Sensitive data ==========
+# (هرگز اینها را commit نکنید)
+*.p12
+*.pfx
+secrets/
+.secrets/
+credentials.json
+token.json
+*.key.json
+*.private-key.json
+service-account.json
+client_secret*.json
+
+# ========== Testing / Temporary files ==========
+temp/
+tmp/
+*.tmp
+*.temp
+test_output/
+test_reports/
+
+# ========== Documentation ==========
+# (اگر مستندات را build می‌کنید)
+site/
+docs/_build/
+mkdocs.yml
+
+# ========== MyPy ==========
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ========== Pytest ==========
+.pytest_cache/
+.tox/
+
+# ========== Pre-commit hooks ==========
+.pre-commit-config.yaml
+
+# ========== Data files (local development) ==========
+data/
+*.csv
+*.xlsx
+*.parquet
+
+# ========== Redis / Cache ==========
+dump.rdb
+*.rdb
+
+# ========== Certificates / SSL ==========
+*.crt
+*.key
+*.pem
+*.pfx
+*.p12
+
+# ========== FastAPI specific ==========
+# (فایل‌های موقتی FastAPI)
+.openapi.json
+openapi.json
+swagger.json
+
+# ========== Backup files ==========
+*.bak
+*.backup
+*.old
+*.orig
+
+# ========== Client-side files (اگر فرانت‌اند دارید) ==========
+# Node modules (اگر از Node.js استفاده می‌کنید)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+dist/
+build/
+out/
+*.min.js
+*.min.css
+
+# Font Awesome (اگر فایل‌های دانلودی دارید)
+webfonts/
+css/all.min.css
+*.woff2

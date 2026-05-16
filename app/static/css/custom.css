@@ -1,0 +1,203 @@
+/* ============================================================
+   custom.css – Minimal styling for our CRUD app
+   No frameworks, only essential rules.
+   ============================================================ */
+
+/* ---------- RESET & GLOBAL ---------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Roboto, system-ui, sans-serif;
+  background: #f0f4f8;
+  color: #1e2a3e;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ---------- NAVIGATION BAR ---------- */
+.navbar {
+  background: #0b3b5f;
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.navbar .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+.navbar-nav {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+.navbar-nav a {
+  color: #e0f2fe;
+  text-decoration: none;
+  font-weight: 500;
+}
+.navbar-nav a:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* ---------- CARD COMPONENT ---------- */
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+.card-header {
+  background: #2c7da0;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.card-body {
+  padding: 1.5rem;
+}
+
+/* ---------- FORM STYLES ---------- */
+.form-group {
+  margin-bottom: 1.2rem;
+}
+label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  color: #0b3b5f;
+}
+input,
+select {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+input:focus {
+  outline: none;
+  border-color: #2c7da0;
+  box-shadow: 0 0 0 3px rgba(44, 125, 160, 0.2);
+}
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.checkbox-group input {
+  width: auto;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background 0.2s;
+}
+.btn-primary {
+  background: #2c7da0;
+  color: white;
+}
+.btn-primary:hover {
+  background: #1f5e7a;
+}
+.btn-danger {
+  background: #d62828;
+  color: white;
+}
+.btn-danger:hover {
+  background: #a81c1c;
+}
+.btn-warning {
+  background: #e9c46a;
+  color: #2d2d2d;
+}
+.btn-warning:hover {
+  background: #d4a832;
+}
+.btn-secondary {
+  background: #8d99ae;
+  color: white;
+}
+.btn-secondary:hover {
+  background: #6c757d;
+}
+.btn-sm {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+/* ---------- TABLE STYLES ---------- */
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th,
+.table td {
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0.75rem;
+  text-align: left;
+}
+.table th {
+  background: #f1f5f9;
+  font-weight: 700;
+}
+.table tr:hover {
+  background: #f8fafc;
+}
+.badge {
+  background: #2c7da0;
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+}
+.badge-secondary {
+  background: #94a3b8;
+}
+
+/* ---------- UTILITIES ---------- */
+.text-center {
+  text-align: center;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.mb-4 {
+  margin-bottom: 1.5rem;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+.d-flex {
+  display: flex;
+}
+.justify-between {
+  justify-content: space-between;
+}
