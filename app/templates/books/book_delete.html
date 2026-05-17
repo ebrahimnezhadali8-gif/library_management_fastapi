@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Book{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header bg-danger text-white">
+            <i class="fas fa-trash-alt"></i> Delete Book
+        </div>
+        <div class="card-body">
+            <p class="mb-3">Are you sure you want to delete the following book?</p>
+            
+            <!-- جدول نمایش مشخصات کتاب -->
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 30%; ">ISBN</th>
+                        <td>{{ book.isbn }}</td>
+                    </tr>
+                    <tr>
+                        <th >Title</th>
+                        <td>{{ book.title }}</td>
+                    </tr>
+                    <tr>
+                        <th >Author</th>
+                        <td>{{ book.author }}</td>
+                    </tr>
+                    <tr>
+                        <th >Year</th>
+                        <td>{{ book.year }}</td>
+                    </tr>
+                    <tr>
+                        <th >Status</th>
+                        <td>
+                            {% if book.is_loaned %}
+                                <span class="badge bg-warning text-dark">Loaned</span>
+                            {% else %}
+                                <span class="badge bg-success">Available</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form method="post" action="/books/delete/{{ book.isbn }}">
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Yes, Delete
+                    </button>
+                    <a href="/books/landing" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

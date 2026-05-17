@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Books{% endblock %}
+
+{% block content %}
+<h2><i class="fas fa-book-open"></i> Books Management</h2>
+
+<!-- ADD BUTTON -->
+<div style="margin: 1.5rem 0;">
+    <a href="/books/add" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add New Book
+    </a>
+</div>
+
+<!-- BOOKS TABLE -->
+<div class="card">
+    <div class="card-header"><i class="fas fa-table"></i> All Books</div>
+    <div class="card-body" style="padding: 0;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.isbn }}</td>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.year }}</td>
+                    <td>
+                        {% if book.is_loaned %}
+                            <span class="badge-secondary">Loaned to {{ book.loaned_to or 'Unknown' }}</span>
+                        {% else %}
+                            <span class="badge-success">Available</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="/books/edit/{{ book.isbn }}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="/books/delete/{{ book.isbn }}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" class="text-center">No books found. Click "Add New Book" to create one.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

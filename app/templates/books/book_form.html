@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if editing %}Edit Book{% else %}Add New Book{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card card-form mx-auto">
+        <div class="card-header">
+            <i class="fas {% if editing %}fa-edit{% else %}fa-plus-circle{% endif %}"></i>
+            {% if editing %}Edit Book{% else %}Add New Book{% endif %}
+        </div>
+        <div class="card-body">
+            {% if error %}
+            <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 0.75rem; border-radius: 12px; margin-bottom: 1rem;">
+                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="post" action="{% if editing %}/books/{{ book_isbn }}{% else %}/books/{% endif %}">
+                <!-- ISBN -->
+                <div class="form-group">
+                    <label for="isbn">
+                        <i class="fas fa-barcode"></i> ISBN *
+                    </label>
+                    <input type="text" name="isbn" id="isbn" class="form-control"
+                           value="{{ form_data.isbn if form_data else (book.isbn if book else '') }}"
+                           {% if editing %}readonly disabled{% endif %} required>
+                    {% if editing %}
+                        <small class="form-text text-muted">ISBN cannot be changed after creation.</small>
+                        <input type="hidden" name="original_isbn" value="{{ book.isbn }}">
+                    {% endif %}
+                </div>
+
+                <!-- Title -->
+                <div class="form-group">
+                    <label for="title">
+                        <i class="fas fa-book"></i> Title *
+                    </label>
+                    <input type="text" name="title" id="title" class="form-control"
+                           value="{{ form_data.title if form_data else (book.title if book else '') }}" required>
+                </div>
+
+                <!-- Author -->
+                <div class="form-group">
+                    <label for="author">
+                        <i class="fas fa-user-edit"></i> Author *
+                    </label>
+                    <input type="text" name="author" id="author" class="form-control"
+                           value="{{ form_data.author if form_data else (book.author if book else '') }}" required>
+                </div>
+
+                <!-- Year -->
+                <div class="form-group">
+                    <label for="year">
+                        <i class="fas fa-calendar-alt"></i> Year *
+                    </label>
+                    <input type="number" name="year" id="year" class="form-control"
+                           value="{{ form_data.year if form_data else (book.year if book else '') }}" required>
+                </div>
+
+                <!-- Is Loaned (checkbox) -->
+                <div class="checkbox-group">
+                    <input type="checkbox" name="is_loaned" id="is_loaned"
+                           {% if (form_data and form_data.is_loaned) or (not form_data and book and book.is_loaned) %}checked{% endif %}>
+                    <label for="is_loaned" style="display: inline; font-weight: normal;">
+                        <i class="fas fa-hand-holding-heart"></i> Is Loaned
+                    </label>
+                </div>
+
+                <!-- Loaned To (optional) -->
+                <div class="form-group">
+                    <label for="loaned_to">
+                        <i class="fas fa-id-card"></i> Loaned To (Member ID)
+                    </label>
+                    <input type="text" name="loaned_to" id="loaned_to" class="form-control"
+                           value="{{ form_data.loaned_to if form_data else (book.loaned_to if book else '') }}" placeholder="e.g., M001">
+                </div>
+
+                <div class="form-group mt-3 d-flex justify-content-between gap-2">
+                    <a href="/books/landing" class="btn btn-danger">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> {% if editing %}Update Book{% else %}Create Book{% endif %}
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
