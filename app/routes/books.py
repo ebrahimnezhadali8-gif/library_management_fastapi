@@ -1,14 +1,16 @@
-from fastapi import APIRouter, Request, Form, status, HTTPException
+from fastapi import APIRouter, Request, Form, status, HTTPException, Query
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 import os
 import json
+import math
 
 router = APIRouter()
 templates = Jinja2Templates(directory="app/templates")
 
 BOOKS_FILE = "books.json"
+ITEMS_PER_PAGE = 5
 
 def load_books():
     if not os.path.exists(BOOKS_FILE):
@@ -17,13 +19,56 @@ def load_books():
         return json.load(f)
 
 @router.get("/landing", response_class=HTMLResponse)
-async def books_landing(request: Request):
+async def books_landing(
+    request: Request,
+    sort: str = Query("default", pattern="^(default|title|author|year)$"),
+    page: int = Query(1, ge=1),
+    search: str = Query(None)
+):
     books = load_books()
+    # search
+    if search:
+        search_lower = search.lower()
+        filtered = []
+        for b in books:
+            if (search_lower in b["title"].lower() or
+                search_lower in b["author"].lower() or
+                search_lower in b["isbn"].lower()):
+                filtered.append(b)
+        books = filtered
+        
+    # Step 2: Apply sorting
+    if sort == "title":
+        books = sorted(books, key=lambda x: x["title"].lower())
+    elif sort == "author":
+        books = sorted(books, key=lambda x: x["author"].lower())
+    elif sort == "year":
+        books = sorted(books, key=lambda x: x["year"])
+        
+     # Step 3: Pagination
+    total_items = len(books)
+    total_pages = math.ceil(total_items / ITEMS_PER_PAGE)
+    
+    start = (page - 1) * ITEMS_PER_PAGE
+    end = start + ITEMS_PER_PAGE
+    paginated_books = books[start:end]
+    
+    if page > total_pages and total_pages > 0:
+        return RedirectResponse(
+            url=f"/books/landing?sort={sort}&page={total_pages}&search={search or ''}",
+            status_code=303
+        )
+    
     return templates.TemplateResponse(
-        request=request,
+       request=request,
         name="books/books_landing.html",
         context={
-            "books": books
+            "books": paginated_books,
+            "total_items": total_items,
+            "current_page": page,
+            "total_pages": total_pages,
+            "sort": sort,
+            "search": search or "",
         }
     )
     

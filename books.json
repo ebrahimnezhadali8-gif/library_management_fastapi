@@ -118,5 +118,13 @@
         "year": 1953,
         "is_loaned": false,
         "loaned_to": null
+    },
+    {
+        "isbn": "978-0-061-12408-3",
+        "title": "Learning FastApi ",
+        "author": "Ali EbrahimNezhad",
+        "year": 2021,
+        "is_loaned": false,
+        "loaned_to": null
     }
 ]
