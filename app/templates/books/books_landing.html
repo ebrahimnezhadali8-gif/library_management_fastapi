@@ -12,7 +12,7 @@
     </a>
 </div>
 
-<!-- جستجو و مرتب‌سازی -->
+<!-- search and sort -->
 <div class="card mb-4">
     <div class="card-body">
         <form method="get" action="/books/landing" class="d-flex gap-2">
@@ -76,7 +76,7 @@
     </div>
 </div>
 
-<!-- صفحه‌بندی (Pagination) با نمایش همیشگی Previous/Next و حالت disabled -->
+<!--  (Pagination) and Previous/Next and disabled -->
 {% if total_pages > 1 %}
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" style="margin-top: 1.5rem;">
@@ -89,7 +89,7 @@
             {% endif %}
         </li>
 
-        <!-- شماره صفحات (همه) -->
+        <!-- number pages (all) -->
         {% for p in range(1, total_pages+1) %}
         <li class="page-item {% if p == current_page %}active{% endif %}">
             <a class="page-link" href="/books/landing?sort={{ sort }}&page={{ p }}&search={{ search }}">{{ p }}</a>

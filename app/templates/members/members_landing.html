@@ -5,14 +5,14 @@
 {% block content %}
 <h2><i class="fas fa-users"></i> Members Management</h2>
 
-<!-- دکمه افزودن عضو -->
+<!-- button add member -->
 <div style="margin: 1.5rem 0;">
     <a href="/members/add" class="btn btn-primary">
         <i class="fas fa-plus"></i> Add New Member
     </a>
 </div>
 
-<!-- نوار جستجو و مرتب‌سازی -->
+<!-- search and sort -->
 <div class="card mb-4">
     <div class="card-body">
         <form method="get" action="/members/landing" class="d-flex gap-2">
@@ -28,7 +28,7 @@
     </div>
 </div>
 
-<!-- جدول اعضا -->
+<!-- table member -->
 <div class="card">
     <div class="card-header"><i class="fas fa-table"></i> All Members</div>
     <div class="card-body" style="padding: 0;">
@@ -68,7 +68,7 @@
     </div>
 </div>
 
-<!-- صفحه‌بندی -->
+<!-- pagination -->
 {% if total_pages > 1 %}
 <nav aria-label="Page navigation">
     <ul class="pagination justify-content-center" style="margin-top: 1.5rem;">
