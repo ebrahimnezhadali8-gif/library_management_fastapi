@@ -12,7 +12,6 @@
             {% if editing %}Edit Member{% else %}Add New Member{% endif %}
         </div>
         <div class="card-body">
-            <!-- نمایش خطا -->
             {% if error %}
             <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 0.75rem; border-radius: 12px; margin-bottom: 1rem;">
                 <i class="fas fa-exclamation-triangle"></i> {{ error }}
@@ -20,7 +19,7 @@
             {% endif %}
 
             <form method="post" action="{% if editing %}/members/{{ member_id }}{% else %}/members/{% endif %}">
-                <!-- Member ID (فقط در حالت ویرایش نمایش داده می‌شود) -->
+                <!-- Member ID -->
                 {% if editing %}
                 <div class="form-group">
                     <label for="member_id">Member ID</label>

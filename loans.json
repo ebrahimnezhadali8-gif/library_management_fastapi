@@ -1,0 +1,37 @@
+[
+    {
+        "loan_id": 1,
+        "book_isbn": "978-0-061-12408-4",
+        "member_id": "M001",
+        "loan_date": "2025-05-21",
+        "return_date": null
+    },
+    {
+        "loan_id": 2,
+        "book_isbn": "978-0-14-103614-4",
+        "member_id": "M003",
+        "loan_date": "2025-05-21",
+        "return_date": null
+    },
+    {
+        "loan_id": 3,
+        "book_isbn": "978-0-316-76948-0",
+        "member_id": "M002",
+        "loan_date": "2025-05-21",
+        "return_date": null
+    },
+    {
+        "loan_id": 4,
+        "book_isbn": "978-0-14-044926-6",
+        "member_id": "M001",
+        "loan_date": "2025-05-21",
+        "return_date": null
+    },
+    {
+        "loan_id": 5,
+        "book_isbn": "978-0-452-28423-4",
+        "member_id": "M007",
+        "loan_date": "2026-05-21",
+        "return_date": null
+    }
+]

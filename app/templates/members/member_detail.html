@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Member Profile{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-header">
+            <i class="fas fa-user"></i> Member Profile: {{ member.name }}
+        </div>
+        <div class="card-body">
+            <p><strong>Member ID:</strong> {{ member.member_id }}</p>
+            <p><strong>Email:</strong> {{ member.email }}</p>
+            <p><strong>Phone:</strong> {{ member.phone }}</p>
+            <p><strong>Currently Loaned Books:</strong> {{ active_loans_count }}</p>
+        </div>
+    </div>
+
+    {% if loaned_books %}
+    <div class="card mt-3">
+        <div class="card-header">
+            <i class="fas fa-book"></i> Loaned Books
+        </div>
+        <div class="card-body" style="padding: 0;">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ISBN</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Loan Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in loaned_books %}
+                    <tr>
+                        <td>{{ book.isbn }}</td>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.loan_date }}</td>
+                        <td>
+                            <form method="post" action="/books/return/{{ book.isbn }}">
+                                <button type="submit" class="btn btn-info btn-sm">Return</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <div class="alert alert-info mt-3">No active loans.</div>
+    {% endif %}
+</div>
+{% endblock %}

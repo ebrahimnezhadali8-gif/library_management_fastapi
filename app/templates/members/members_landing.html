@@ -50,6 +50,9 @@
                     <td>{{ member.email }}</td>
                     <td>{{ member.phone }}</td>
                     <td>
+                        <a href="/members/{{ member.member_id }}" class="btn btn-primary btn-sm">
+                            <i class="fas fa-eye"></i> Profile
+                        </a>
                         <a href="/members/edit/{{ member.member_id }}" class="btn btn-warning btn-sm">
                             <i class="fas fa-edit"></i>
                         </a>

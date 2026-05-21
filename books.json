@@ -20,8 +20,8 @@
         "title": "1984",
         "author": "George Orwell",
         "year": 1949,
-        "is_loaned": false,
-        "loaned_to": null
+        "is_loaned": true,
+        "loaned_to": "M007"
     },
     {
         "isbn": "978-0-14-103614-4",

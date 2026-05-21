@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Form, status
 from fastapi.responses import RedirectResponse
+from app.routes.loans import get_active_loans_for_member
 from fastapi import HTTPException
 import json
 import os
@@ -81,6 +82,39 @@ async def members_landing(
             "total_pages": total_pages,
             "sort": sort,
             "search": search if search else "",
+        }
+    )
+    
+# show member details and their active loans
+@router.get("/{member_id}", response_class=HTMLResponse)
+async def member_detail(request: Request, member_id: str):
+    members = load_members()
+    member = next((m for m in members if m["member_id"] == member_id), None)
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    active_loans = get_active_loans_for_member(member_id)
+    # Recive book details for each active loan
+    from app.routes.books import load_books
+    books = load_books()
+    loaned_books = []
+    for loan in active_loans:
+        book = next((b for b in books if b["isbn"] == loan["book_isbn"]), None)
+        if book:
+            loaned_books.append({
+                "isbn": book["isbn"],
+                "title": book["title"],
+                "author": book["author"],
+                "loan_date": loan["loan_date"]
+            })
+    
+    return templates.TemplateResponse(
+        request=request,
+        name="members/member_detail.html",
+        context={
+            "member": member,
+            "loaned_books": loaned_books,
+            "active_loans_count": len(active_loans)
         }
     )
 

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Loan Book{% endblock %}
+
+{% block content %}
+<div class="container mt-3">
+    <div class="card card-form mx-auto" style="max-width: 600px;">
+        <div class="card-header bg-primary text-white">
+            <i class="fas fa-hand-holding-heart"></i> Loan Book
+        </div>
+        <div class="card-body">
+            <!-- اطلاعات کتاب -->
+            <div class="alert alert-info">
+                <strong><i class="fas fa-book"></i> Book Details:</strong><br>
+                <strong>ISBN:</strong> {{ book.isbn }}<br>
+                <strong>Title:</strong> {{ book.title }}<br>
+                <strong>Author:</strong> {{ book.author }}<br>
+                <strong>Year:</strong> {{ book.year }}
+            </div>
+
+            {% if error %}
+            <div class="alert alert-danger">
+                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="post" action="/books/loan/{{ book.isbn }}">
+                <div class="form-group">
+                    <label for="member_id"><i class="fas fa-user"></i> Select Member</label>
+                    <select name="member_id" id="member_id" class="form-control" required>
+                        <option value="">-- Choose a member --</option>
+                        {% for member in members %}
+                        <option value="{{ member.member_id }}">{{ member.member_id }} - {{ member.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group mt-3 d-flex justify-content-between gap-2">
+                    <a href="/books/landing" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Cancel
+                    </a>
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-hand-holding-heart"></i> Confirm Loan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
