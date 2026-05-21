@@ -96,7 +96,6 @@ async def add_member_form(request: Request):
             "member_id": None
         }
     )
-
 # Create new member
 @router.post("/", response_class=HTMLResponse)
 async def create_member(
@@ -105,9 +104,28 @@ async def create_member(
     email: str = Form(...),
     phone: str = Form(...)
 ):
+    # validation email
+    if "@" not in email:
+        error_msg = "Invalid email address. Email must contain '@'."
+        return templates.TemplateResponse(
+            request=request,
+            name="members/member_form.html",
+            context={
+                "editing": False,
+                "member": None,
+                "member_id": None,
+                "error": error_msg,
+                "form_data": {
+                    "name": name,
+                    "email": email,
+                    "phone": phone
+                }
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+
     members = load_members()
     new_id = next_member_id(members)
-
     new_member = {
         "member_id": new_id,
         "name": name,
@@ -116,18 +134,13 @@ async def create_member(
     }
     members.append(new_member)
     save_members(members)
-
     return RedirectResponse("/members/landing", status_code=status.HTTP_303_SEE_OTHER)
 
 # Show edit member form
 @router.get("/edit/{member_id}", response_class=HTMLResponse)
 async def edit_member_form(request: Request, member_id: str):
     members = load_members()
-    member = None
-    for m in members:
-        if m["member_id"] == member_id:
-            member = m
-            break
+    member = next((m for m in members if m["member_id"] == member_id), None)
     if member is None:
         raise HTTPException(status_code=404, detail="Member not found")
     return templates.TemplateResponse(
@@ -140,15 +153,37 @@ async def edit_member_form(request: Request, member_id: str):
         }
     )
 
-
 # Update member
 @router.post("/{member_id}")
 async def update_member(
+    request: Request,
     member_id: str,
     name: str = Form(...),
     email: str = Form(...),
     phone: str = Form(...)
 ):
+    # validation email
+    if "@" not in email:
+        members = load_members()
+        original_member = next((m for m in members if m["member_id"] == member_id), None)
+        error_msg = "Invalid email address. Email must contain '@'."
+        return templates.TemplateResponse(
+            request=request,
+            name="members/member_form.html",
+            context={
+                "editing": True,
+                "member": original_member,
+                "member_id": member_id,
+                "error": error_msg,
+                "form_data": {
+                    "name": name,
+                    "email": email,
+                    "phone": phone
+                }
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+
     members = load_members()
     for i, m in enumerate(members):
         if m["member_id"] == member_id:
@@ -161,7 +196,6 @@ async def update_member(
             save_members(members)
             return RedirectResponse("/members/landing", status_code=status.HTTP_303_SEE_OTHER)
     raise HTTPException(status_code=404, detail="Member not found")
-
 # Show delete confirmation  
 @router.get("/delete/{member_id}", response_class=HTMLResponse)
 async def confirm_delete(request: Request, member_id: str):

@@ -12,8 +12,15 @@
             {% if editing %}Edit Member{% else %}Add New Member{% endif %}
         </div>
         <div class="card-body">
+            <!-- نمایش خطا -->
+            {% if error %}
+            <div class="alert alert-danger" style="background: #f8d7da; color: #721c24; padding: 0.75rem; border-radius: 12px; margin-bottom: 1rem;">
+                <i class="fas fa-exclamation-triangle"></i> {{ error }}
+            </div>
+            {% endif %}
+
             <form method="post" action="{% if editing %}/members/{{ member_id }}{% else %}/members/{% endif %}">
-                <!-- Member ID (فقط نمایش در حالت ویرایش و غیرقابل تغییر) -->
+                <!-- Member ID (فقط در حالت ویرایش نمایش داده می‌شود) -->
                 {% if editing %}
                 <div class="form-group">
                     <label for="member_id">Member ID</label>
@@ -26,21 +33,21 @@
                 <div class="form-group">
                     <label for="name">Name *</label>
                     <input type="text" name="name" id="name" class="form-control"
-                           value="{{ member.name if member else '' }}" required>
+                           value="{{ form_data.name if form_data else (member.name if member else '') }}" required>
                 </div>
 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email *</label>
                     <input type="email" name="email" id="email" class="form-control"
-                           value="{{ member.email if member else '' }}" required>
+                           value="{{ form_data.email if form_data else (member.email if member else '') }}" required>
                 </div>
 
                 <!-- Phone -->
                 <div class="form-group">
                     <label for="phone">Phone</label>
                     <input type="text" name="phone" id="phone" class="form-control"
-                           value="{{ member.phone if member else '' }}">
+                           value="{{ form_data.phone if form_data else (member.phone if member else '') }}">
                 </div>
 
                 <div class="form-group mt-3 d-flex justify-content-between gap-2">
