@@ -1,7 +1,9 @@
+from urllib import request
 from fastapi import APIRouter, Request, Form, status, HTTPException, Query
 from fastapi.responses import RedirectResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
+from datetime import datetime
 import os
 import json
 import math
@@ -74,10 +76,16 @@ async def books_landing(
     
 @router.get("/add", response_class=HTMLResponse)
 async def add_book_form(request: Request):
+    current_year = datetime.now().year
     return templates.TemplateResponse(
         request=request,
         name="books/book_form.html",
-        context={"editing": False, "book": None, "book_isbn": None}
+        context={
+            "editing": False,
+            "book": None,
+            "book_isbn": None,
+            "current_year": current_year
+        }
     )
     
 @router.post("/", response_class=HTMLResponse)
@@ -91,6 +99,30 @@ async def create_book(
     loaned_to: str = Form("")
 ):
     books = load_books()
+    current_year = datetime.now().year
+
+    # validation years
+    if year < 1800 or year > current_year:
+        error_msg = f"Year must be between 1800 and {current_year}."
+        return templates.TemplateResponse(
+            request=request,
+            name="books/book_form.html",
+            context={
+                "editing": False,
+                "book": None,
+                "book_isbn": None,
+                "error": error_msg,
+                "form_data": {
+                    "isbn": isbn,
+                    "title": title,
+                    "author": author,
+                    "year": year,
+                    "is_loaned": is_loaned,
+                    "loaned_to": loaned_to
+                }
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
     
    # Check for duplicate ISBN
     for book in books:
@@ -136,17 +168,19 @@ async def create_book(
 @router.get("/edit/{book_isbn}", response_class=HTMLResponse)
 async def edit_book_form(request: Request, book_isbn: str):
     books = load_books()
-    book = None
-    for b in books:
-        if b["isbn"] == book_isbn:
-            book = b
-            break
+    book = next((b for b in books if b["isbn"] == book_isbn), None)
     if book is None:
         raise HTTPException(status_code=404, detail="Book not found")
+    current_year = datetime.now().year
     return templates.TemplateResponse(
         request=request,
         name="books/book_form.html",
-        context={"editing": True, "book": book, "book_isbn": book_isbn}
+        context={
+            "editing": True,
+            "book": book,
+            "book_isbn": book_isbn,
+            "current_year": current_year 
+        }
     )
     
 @router.post("/{book_isbn}")
@@ -159,6 +193,34 @@ async def update_book(
     loaned_to: str = Form("")
 ):
     books = load_books()
+    current_year = datetime.now().year
+
+    # validatiion years
+    if year < 1800 or year > current_year:
+        original_book = None
+        for b in books:
+            if b["isbn"] == book_isbn:
+                original_book = b
+                break
+        error_msg = f"Year must be between 1800 and {current_year}."
+        return templates.TemplateResponse(
+            request=request,
+            name="books/book_form.html",
+            context={
+                "editing": True,
+                "book": original_book,
+                "book_isbn": book_isbn,
+                "error": error_msg,
+                "form_data": {
+                    "title": title,
+                    "author": author,
+                    "year": year,
+                    "is_loaned": is_loaned,
+                    "loaned_to": loaned_to
+                }
+            },
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
     for i, book in enumerate(books):
         if book["isbn"] == book_isbn:
             books[i] = {

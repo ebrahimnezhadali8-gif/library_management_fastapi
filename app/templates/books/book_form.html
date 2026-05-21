@@ -57,7 +57,8 @@
                         <i class="fas fa-calendar-alt"></i> Year *
                     </label>
                     <input type="number" name="year" id="year" class="form-control"
-                           value="{{ form_data.year if form_data else (book.year if book else '') }}" required>
+       value="{{ form_data.year if form_data else (book.year if book else '') }}"
+       min="1800" max="{{ current_year }}" required>
                 </div>
 
                 <!-- Is Loaned (checkbox) -->
